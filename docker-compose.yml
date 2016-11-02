@@ -2,7 +2,6 @@ nginx:
     build: ./nginx
     links:
         - node1:node1
-        - node2:node2
     ports:
         - "80:80"
 node1:
@@ -14,19 +13,6 @@ node1:
         - POSTGRES_PASSWORD=yourpw
     links:
         - postgres
-        - elasticsearch
-    ports:
-        - "8080"
-node2:
-    build: ./node
-    volumes:
-        - ./node/.:/src
-    environment:
-        - POSTGRES_USER=youruser
-        - POSTGRES_PASSWORD=yourpw
-    links:
-        - postgres
-        - elasticsearch
     ports:
         - "8080"
 postgres:
@@ -36,10 +22,3 @@ postgres:
         - POSTGRES_PASSWORD=yourpw
     ports:
         - "5432:5432"
-elasticsearch:
-    image: elasticsearch
-    environment:
-        ELASTICSEARCH_USER: youruser
-        ELASTICSEARCH_PASS: yourpw
-    ports:
-        - "9200:9200"
